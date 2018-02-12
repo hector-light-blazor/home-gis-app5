@@ -139,7 +139,7 @@ export class EsriMapComponent implements OnInit {
         this.locationSmb = new SimpleMarkerSymbol(SimpleMarkerSymbol.STYLE_CIRCLE, 14,
           new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID,
           new Color([1,1,1]), 3),
-          new Color([220,20,60]));
+          new Color([220,20,60])); // Change the color to crimson from blueish...
 
           this.symbolLineOne = new SimpleLineSymbol({
             "type": "esriSLS",
