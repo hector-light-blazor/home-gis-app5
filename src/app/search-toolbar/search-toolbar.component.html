@@ -6,7 +6,7 @@
 
     </div>
     <div class="left inbox">
-        <ng2-completer [(ngModel)]="searchAddress" (keyup)="onEnterSearch($event)"  (selected)="onSelectedSearch($event)" placeholder="Search 9-1-1 Database"  [datasource]="dataService" [minSearchLength]="2">
+        <ng2-completer [(ngModel)]="searchAddress" (keyup)="onEnterSearch($event)" (keyup.enter)="onSelectedSearch($event)"  (selected)="onSelectedSearch($event)" placeholder="Search 9-1-1 Database"  [datasource]="dataService" [minSearchLength]="2">
 
         </ng2-completer>
 

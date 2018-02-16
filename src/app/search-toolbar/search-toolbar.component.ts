@@ -16,7 +16,7 @@ export class SearchToolbarComponent implements OnInit {
   dataService: CompleterData;
   searchAddress: string = "";
   autoCompleteURL: string = "https://gis.lrgvdc911.org/php/spartan/api/v2/index.php/search/autoComplete/?auto=";
-
+  foundOnEnter: boolean = false;
   // For Search HCAD INFORMATION...
   propertyId: string = 'hcad.DBO.Parcel.PROP_ID';
   hoodName: string = 'HCAD2.dbo.web_map_property.hood_name';
@@ -42,12 +42,18 @@ export class SearchToolbarComponent implements OnInit {
 
   // <<< FOLLOWING MODULES HANDLES NG COMPLETER COMPONENT >>>
   onSelectedSearch(select) {
-
+     console.log(select);
+     console.log("HELLO SELECTED");
+     this.foundOnEnter = true;
      this.onSelectAddress.emit(select);
   }
 
   // ...Module Gets Text And Searches Database for address match...
   onEnterSearch(event) {
+      if(this.foundOnEnter) {
+        this.foundOnEnter = false;
+        return;
+      }
       if(event == "click") {
           var isnum = /^\d+$/.test(this.searchAddress);
           if(isnum) { //If Number is property id...
