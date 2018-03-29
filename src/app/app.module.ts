@@ -19,6 +19,7 @@ import {AppService} from "./app.service";
 import {PanelService} from "./panel.service";
 import { RemoveSpacesPipe } from './remove-spaces.pipe';
 import { DisclaimerMessageBoxComponent } from './disclaimer-message-box/disclaimer-message-box.component';
+import { GeolocationService } from './geolocation.service';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,7 @@ import { DisclaimerMessageBoxComponent } from './disclaimer-message-box/disclaim
     EsriLoaderModule,
     Ng2CompleterModule
   ],
-  providers: [AppService, PanelService],
+  providers: [AppService, PanelService, GeolocationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

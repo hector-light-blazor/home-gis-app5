@@ -1,12 +1,17 @@
 import { Component, OnInit,Input, Output, EventEmitter, ViewChild,ElementRef } from '@angular/core';
 import { EsriLoaderService } from 'angular-esri-loader';
 import {AppService} from "../app.service";
+import { GeolocationService } from '../geolocation.service';
+
+var _self = this;
 
 @Component({
   selector: 'app-esri-map',
   templateUrl: './esri-map.component.html',
   styleUrls: ['./esri-map.component.css']
 })
+
+
 export class EsriMapComponent implements OnInit {
 
   // =-=-=-= OUTPUT VARIABLES =-=-=--=
@@ -48,11 +53,14 @@ export class EsriMapComponent implements OnInit {
   emsArr = [];
   lawArr = [];
   fireArr = [];
-
+  
   // ..keep track mouse clicks..
   keepTrack: any = {fire: null, ems: null, law: null};
 
-  constructor(private esriLoader: EsriLoaderService, private _appService: AppService) { }
+  constructor(private esriLoader: EsriLoaderService, private _appService: AppService, private geo:GeolocationService) { 
+    var _self = this;
+
+  }
 
   ngOnInit() {
     //Zoom geometry..
@@ -63,8 +71,9 @@ export class EsriMapComponent implements OnInit {
 
   this.createMap();
 
-  }
 
+ 
+  }
   // =-=-=-= DETECT CHANGES =-=--=-=--=-
   ngOnChanges() {
     if(this.layer) {
@@ -162,6 +171,17 @@ export class EsriMapComponent implements OnInit {
 
            _self.autoRecenter();
            _self.wmsLayer.hide();
+
+           const accuracy = { enableHighAccuracy: true }; 
+          _self.geo.getLocation(accuracy).subscribe( function(position) {
+            
+            _self.pointClass.setX(position.coords.longitude);
+            _self.pointClass.setY(position.coords.latitude);
+            _self.onZoom(_self.pointClass);
+            console.log(position);
+     
+          }, function(error) {  } );
+
         })
 
         // Listen when all layers are added
@@ -343,6 +363,21 @@ export class EsriMapComponent implements OnInit {
 
     })
  }
+
+ // On Current Location
+test() {
+  console.log("RUN TEST");
+}
+ onCurrentLocation(location:any) {
+    console.log(location);
+    var lat = location.coords.latitude;
+    var lng = location.coords.longitude;
+    console.log(lat);
+    console.log(lng);
+    _self.test();
+    
+ } 
+
 
 // .... On Zoom Based on geometry ...
  onZoom(geometry) {
